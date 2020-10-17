@@ -9,7 +9,7 @@ class EquipageForm(ModelForm):
         widgets = {
             'name': TextInput(
                 attrs={
-                    "placeholder": "Charalampos (Django)",
+                    "placeholder": "Charalampos",
                 }
             ),
         }

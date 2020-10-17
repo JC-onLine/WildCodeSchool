@@ -27,14 +27,12 @@
     <form action="" method="POST" class="new-member-form">
       {% csrf_token %}
       <label for="name">Nom de l&apos;Argonaute</label>
-<!--      <input id="name" name="name" type="text" placeholder="Charalampos" />-->
       {{ form.name }}
       <input name="validation" type="submit" value="Envoyer">
-<!--      <button type="submit">Envoyer</button>-->
     </form>
 
     <!-- Member list -->
-    <h2>Membres de l'équipage</h2>
+    <h2>Membres de l'équipage ({{ eq_count }})</h2>
     <section class="member-list">
       {% for equipier in equipage %}
         <div class="member-item">{{ equipier }}</div>
