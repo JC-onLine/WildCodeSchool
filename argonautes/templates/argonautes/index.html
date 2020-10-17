@@ -3,7 +3,7 @@
 <html lang="fr" xmlns:border="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <title>Arganautes liste!</title>
+  <title>Equipage Arganautes!</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
   <meta name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,18 +24,19 @@
 
     <!-- New member form -->
     <h2>Ajouter un(e) Argonaute</h2>
-    <form class="new-member-form">
+    <form action="" method="POST" class="new-member-form">
+      {% csrf_token %}
       <label for="name">Nom de l&apos;Argonaute</label>
-      <input id="name" name="name" type="text" placeholder="Charalampos" />
-      <button type="submit">Envoyer</button>
+      {{ form.name }}
+      <input name="validation" type="submit" value="Envoyer">
     </form>
 
     <!-- Member list -->
-    <h2>Membres de l'équipage</h2>
+    <h2>Membres de l'équipage ({{ eq_count }})</h2>
     <section class="member-list">
-      <div class="member-item">Eleftheria</div>
-      <div class="member-item">Gennadios</div>
-      <div class="member-item">Lysimachos</div>
+      {% for equipier in equipage %}
+        <div class="member-item">{{ equipier }}</div>
+      {% endfor %}
     </section>
   </main>
 
