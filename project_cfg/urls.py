@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import argonautes
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('argonautes.urls')),
+    # path('', include('argonautes.urls')),
+    path('chat/', include('argonautes.urls')),
 ]

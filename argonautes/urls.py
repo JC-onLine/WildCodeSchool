@@ -1,8 +1,11 @@
 from django.urls import path
-from .views import main_page
+from .views import main_page, index, room
+
+app_name = 'argonautes'
+
 
 urlpatterns = [
-    # Activity url
-    path('',
-         main_page, name='main-page'),
+    # path('', main_page, name='main-page'),
+    path('', index, name='index'),
+    path('<str:room_name>/', room, name='room'),
 ]

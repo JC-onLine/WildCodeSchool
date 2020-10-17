@@ -25,3 +25,15 @@ def main_page(request):
         'form': form
     }
     return render(request, 'argonautes/index.html', context)
+
+
+# channels
+def index(request):
+    return render(request, 'argonautes/channels.html')
+
+
+def room(request, room_name):
+    return render(request, 'argonautes/room.html', {
+        'room_name': room_name
+    })
+
