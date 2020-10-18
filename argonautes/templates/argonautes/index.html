@@ -6,7 +6,13 @@
   <title>Equipage Arganautes!</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
   <meta name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- The JS lib allowing to use websocket. -->
+  <script src="{% static 'js/autobahn/autobahn.min.js' %}"
+      type="text/javascript"></script>
+  <!-- Calling appli JS script -->
+  <script src="{% static 'js/argonautes/appli.js' %}"
+      type="text/javascript"></script>
 </head>
 
 
@@ -33,7 +39,7 @@
 
     <!-- Member list -->
     <h2>Membres de l'équipage ({{ eq_count }})</h2>
-    <section class="member-list">
+    <section id="team-list" class="member-list">
       {% for equipier in equipage %}
         <div class="member-item">{{ equipier }}</div>
       {% endfor %}
