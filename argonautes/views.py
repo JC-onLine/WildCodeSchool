@@ -46,6 +46,7 @@ def notify_server_config_changed(sender, instance, **kwargs):
         and it makes a POST request on the WAMP-HTTP bridge (crossbar),
         allowing us to make a WAMP publication from Django.
     """
+    print("notify_server_config_changed!")
     requests.post("http://127.0.0.1:8080/notify",
                   json={
                       'topic': 'vatconfig.192.168.1.230',

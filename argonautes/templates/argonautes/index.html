@@ -39,10 +39,12 @@
 
     <!-- Member list -->
     <h2>Membres de l'équipage ({{ eq_count }})</h2>
-    <section id="team-list" class="member-list">
-      {% for equipier in equipage %}
-        <div class="member-item">{{ equipier }}</div>
-      {% endfor %}
+    <section id="section">
+      <div id="div_container">
+        {% for equipier in equipage %}
+          <div class="member-item">{{ equipier }}</div>
+        {% endfor %}
+      </div>
     </section>
   </main>
 
