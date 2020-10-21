@@ -19,8 +19,8 @@ def called_on_joined():
     # ==== Create & Use autobahn 'client_mode' channel
     # ==== to auto refresh web page when database changed
     json_data = {
-        'mode': 'CLEAR',
-        # 'team_list': ["Equipier1", "Equipier2", "Equipier3"]
+        # 'mode': 'CLEAR',
+        'team_list': ["Equipier1", "Equipier2", "Equipier3"]
     }
     app.session.publish('argonautes_channel', json_data)
     print('called_on_joined: publish', json_data)
