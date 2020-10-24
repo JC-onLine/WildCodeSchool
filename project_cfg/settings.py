@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don't ws_sender_run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []

@@ -2,7 +2,13 @@ from django.shortcuts import render
 from .form import EquipageForm
 from .models import Equipage
 
+
 def main_page(request):
+    """
+    Display EquipageForm and save data
+    :param request:
+    :return:
+    """
     form = EquipageForm(request.POST)
     equipage = Equipage.objects.all()
     eq_count = Equipage.objects.count() + 1

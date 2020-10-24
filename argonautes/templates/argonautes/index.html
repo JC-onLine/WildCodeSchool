@@ -6,7 +6,13 @@
   <title>Equipage Arganautes!</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
   <meta name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- The JS lib allowing to use websocket. -->
+  <script src="{% static 'js/autobahn/autobahn.min.js' %}"
+      type="text/javascript"></script>
+  <!-- Calling appli JS script -->
+  <script src="{% static 'js/argonautes/appli.js' %}"
+      type="text/javascript"></script>
 </head>
 
 
@@ -14,7 +20,7 @@
   <!-- Header section -->
   <header>
     <h1>
-      <img src="https://www.wildcodeschool.com/assets/logo_main-e4f3f744c8e717f1b7df3858dce55a86c63d4766d5d9a7f454250145f097c2fe.png" alt="Wild Code School logo" />
+<!--      <img src="https://www.wildcodeschool.com/assets/logo_main-e4f3f744c8e717f1b7df3858dce55a86c63d4766d5d9a7f454250145f097c2fe.png" alt="Wild Code School logo" />-->
       Les Argonautes
     </h1>
   </header>
@@ -32,11 +38,13 @@
     </form>
 
     <!-- Member list -->
-    <h2>Membres de l'équipage ({{ eq_count }})</h2>
-    <section class="member-list">
-      {% for equipier in equipage %}
-        <div class="member-item">{{ equipier }}</div>
-      {% endfor %}
+    <h2>Membres de l'équipage</h2>
+    <section id="team-list-section">
+      <div id="div_container">
+        {% for equipier in equipage %}
+          <div class="member-item">{{ equipier }}</div>
+        {% endfor %}
+      </div>
     </section>
   </main>
 
