@@ -15,20 +15,23 @@ from twisted.internet import reactor
 
 # Start client on command line if main.
 @begin.start
-def run(
+def ws_sender_run(
         host='127.0.0.1',
         channel='argonautes_channel',
-        message='Hello world!'
+        message='Hello world!',
+        separator=',',
 ):
-    """Send a message to a JavaScript Crossbar client via Websocket"""
-    # converting data parameters to list
-    data = message.split(',')
+    """
+        Send a message to a JavaScript Crossbar client via Websocket.
+        Default message is 'Hello World!'
+    """
+    data = message.split(separator)
     print(f"data: {data}")
+
     # Wamp Application instance
     app = Application()
 
     @app.signal('onjoined')
-    # @inlineCallbacks
     def called_on_joined():
         json_data = {
             'topic': data,

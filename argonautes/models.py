@@ -4,7 +4,7 @@ import requests
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms.models import model_to_dict
-from .ws_sender import run
+from .ws_sender import ws_sender_run
 
 
 class Equipage(models.Model):
@@ -24,10 +24,11 @@ def notify_server_config_changed(sender, instance, **kwargs):
     """
     # Extract team members from database and convert to json
     print("==== Database Event! ====")
-    team_list = Equipage.objects.all()
-    print(f"team_list: {team_list}")
-    print(f"model_to_dict: {model_to_dict(team_list)}")
-    run(message="Argonaute1, Argonaute2, Argonaute")
+
+    # team_list = Equipage.objects.all()
+    # print(f"team_list: {team_list}")
+    # print(f"model_to_dict: {model_to_dict(team_list)}")
+    # ws_sender_run(message="Argonaute1, Argonaute2, Argonaute")
     #
     # print("notify_server_config_changed!")
     # requests.post("http://127.0.0.1:8080/notify",

@@ -9,5 +9,5 @@ There is only one text field in the database, and the button "Envoyer" is use to
 
 In the web page bottom, the full participant list id display. 
 
-## How it run ?
+## How it ws_sender_run ?
 This project is make with "Django" a Python Web Framework.
