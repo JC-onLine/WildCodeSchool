@@ -1,9 +1,8 @@
 from django.db import models
 # use to update ws client when database change.
-import requests
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-# from django.forms.models import model_to_dict
+from django.forms.models import model_to_dict
 from .ws_sender import ws_sender_run
 
 
@@ -23,7 +22,10 @@ def notify_client_database_changed(sender, instance, **kwargs):
         allowing us to make a WAMP publication from Django.
     """
     print("==== Database Event! + ws_sender_run() ====")
-    ws_sender_run(message="Message depuis signals.post_save")
+    team_queryset = Equipage.objects.values()
+    team_list = [Entry for Entry in team_queryset]
+    print(f"== Database: {team_list}")
+    ws_sender_run(loop=True, message=team_list)
 
 
 post_save.connect(notify_client_database_changed, sender=Equipage)

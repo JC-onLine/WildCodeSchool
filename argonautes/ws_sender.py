@@ -5,11 +5,11 @@ from autobahn.twisted.wamp import Application
 from twisted.internet import reactor
 
 """
-    Send a Websocket message to JavaScript page on web server.
+    Send a Websocket message to JavaScript page client side.
 :param host:    Hostname or IP adresse. Default=localhost
-:param port:    Server port. Default=8080
+:param channel: argonautes_channel
 :param message: Message to send. Default='Hello world!'
-:return:        Websocket request to web server.
+:return:        Websocket request to web client.
 """
 
 
@@ -20,6 +20,7 @@ def ws_sender_run(
         channel='argonautes_channel',
         message='Hello world!',
         separator=',',
+        loop='False'
 ):
     """
         Send a message to a JavaScript Crossbar client via Websocket.
@@ -39,7 +40,8 @@ def ws_sender_run(
         # Send to Crossbar/autobahn channel
         app.session.publish(channel, json_data)
         print(f"ws_sender: sending {json_data}")
-        app.session.leave()
+        if not loop:
+            app.session.leave()
 
     @app.signal('onleave')
     def called_on_onleave():
@@ -53,4 +55,4 @@ def ws_sender_run(
     if host == "open1024.fr":
         app.run(url='wss://{}/ws'.format(host), start_reactor=False)
     else:
-        app.run(url='ws://{}:8080/ws'.format(host), start_reactor=True)
+        app.run(url='ws://{}:8080/ws'.format(host), start_reactor=False)
