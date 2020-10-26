@@ -6,10 +6,13 @@ from twisted.internet import reactor
 
 """
     Send a Websocket message to JavaScript page client side.
-:param host:    Hostname or IP adresse. Default=localhost
-:param channel: argonautes_channel
-:param message: Message to send. Default='Hello world!'
-:return:        Websocket request to web client.
+:param host:        Hostname or IP adresse. Default=localhost
+:param channel:     Channel id to JS explatation
+:param message:     Message to send. Default='Hello world!'
+:param separator:   Can split message to many <div>
+:loop:              Use to stop 'reactor' in command line mode.
+:log:               Use to display log.  
+:return:            Websocket request to web client.
 """
 
 
@@ -19,27 +22,35 @@ def ws_sender_run(
         host='127.0.0.1',
         channel='argonautes_channel',
         message='Hello world!',
-        separator=',',
-        loop='False'
+        separator='',
+        loop=False,
+        log=False
 ):
     """
         Send a message to a JavaScript Crossbar client via Websocket.
-        Default message is 'Hello World!'
     """
-    data = message.split(separator)
-    print(f"data: {data}")
+    if log:
+        print(f"ws_sender: message: {message}")
+        print(f"ws_sender: receiv data: {message}")
+    if separator != '':
+        data = message.split(separator)
+    else:
+        data = message
 
     # Wamp Application instance
     app = Application()
 
     @app.signal('onjoined')
     def called_on_joined():
+        if log:
+            print(f"ws_sender: onjoined: {data}")
         json_data = {
             'topic': data,
         }
         # Send to Crossbar/autobahn channel
         app.session.publish(channel, json_data)
-        print(f"ws_sender: sending {json_data}")
+        if log:
+            print(f"ws_sender: sending data: {json_data}")
         if not loop:
             app.session.leave()
 

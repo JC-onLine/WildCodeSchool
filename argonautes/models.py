@@ -22,10 +22,10 @@ def notify_client_database_changed(sender, instance, **kwargs):
         allowing us to make a WAMP publication from Django.
     """
     print("==== Database Event! + ws_sender_run() ====")
-    team_queryset = Equipage.objects.values()
-    team_list = [Entry for Entry in team_queryset]
+    team_queryset = Equipage.objects.values_list('name', flat=True).order_by('pk')
+    team_list = list(team_queryset)
     print(f"== Database: {team_list}")
-    ws_sender_run(loop=True, message=team_list)
+    ws_sender_run(message=team_list, loop=True, log=True)
 
 
 post_save.connect(notify_client_database_changed, sender=Equipage)
