@@ -13,12 +13,12 @@ def main_page(request):
     :return:
     """
     form = EquipageForm(request.POST)
-    equipage = Equipage.objects.all()
+    equipage = Equipage.objects.all().order_by('pk')
     eq_count = Equipage.objects.count() + 1
     # catch POST form
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            # form.save()
             context = {
                 'equipage': equipage,
                 'eq_count': eq_count,
