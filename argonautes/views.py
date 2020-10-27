@@ -9,45 +9,47 @@ from django.core import serializers
 def main_page(request):
     """
     Display EquipageForm and save data
-    :param request:
-    :return:
+    :param request: POST request with form
+    :return:        Display form for the 1st time
+                    Save team memeber name in database
     """
-    form = EquipageForm(request.POST)
+    # form = EquipageForm(request.POST)
+    form = EquipageForm()
     equipage = Equipage.objects.all().order_by('pk')
-    eq_count = Equipage.objects.count() + 1
-    # catch POST form
-    if request.method == 'POST':
-        if form.is_valid():
+    # eq_count = Equipage.objects.count() + 1
+    # catch POST form response
+    # if request.method == 'POST':
+        # if form.is_valid():
             # form.save()
-            context = {
-                'equipage': equipage,
-                'eq_count': eq_count,
-                'form': form
-            }
-            return render(request, 'argonautes/index.html', context)
-    else:
-        form = EquipageForm()
+            # context = {
+            #     'equipage': equipage,
+            #     'eq_count': eq_count,
+            #     'form': form
+            # }
+            # return render(request, 'argonautes/index.html', context)
+    # else:
+    #     form = EquipageForm()
     # display form
     context = {
         'equipage': equipage,
-        'eq_count': eq_count,
+        # 'eq_count': eq_count,
         'form': form
     }
     return render(request, 'argonautes/index.html', context)
 
 
-def add_agonaute(request):
-    # request should be ajax and method should be POST.
-    if request.is_ajax and request.method == "POST":
-        # get the form data
+def add_argonaute(request):
+    # request control: Must be POST and AJAX
+    if request.method == "POST" and request.is_ajax :
+        # read the form data
         form = EquipageForm(request.POST)
-        # save the data and after fetch the object in instance
+        # check valid data and save
         if form.is_valid():
-            instance = form.save()
-            # serialize in new friend object in json
-            ser_instance = serializers.serialize('json', [instance, ])
-            # send to client side.
-            return JsonResponse({"instance": ser_instance}, status=200)
+            current_data = form.save()
+            # convert data to json for js
+            current_data_json = serializers.serialize('json', [ current_data, ])
+            # send data to client.
+            return JsonResponse({"instance": current_data_json}, status=200)
         else:
             # some form errors occured.
             return JsonResponse({"error": form.errors}, status=400)

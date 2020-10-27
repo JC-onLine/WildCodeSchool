@@ -63,7 +63,7 @@ def ws_sender_run(
         reactor.stop()
 
     # Environment detection: PRODUCTION/DEV
-    if host == "open1024.fr":
-        app.run(url='wss://{}/ws'.format(host), start_reactor=False)
-    else:
+    if host == "127.0.0.1":
         app.run(url='ws://{}:8080/ws'.format(host), start_reactor=False)
+    else:
+        app.run(url='wss://{}/ws'.format(host), start_reactor=False)
