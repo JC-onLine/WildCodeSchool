@@ -25,7 +25,10 @@ SECRET_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
 # SECURITY WARNING: don't ws_sender_run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'bdf25fab89e9.ngrok.io',
+]
 
 
 # Application definition

@@ -9,7 +9,8 @@ class EquipageForm(ModelForm):
         widgets = {
             'name': TextInput(
                 attrs={
-                    "placeholder": "Charalampos",
+                    'id': 'id_name',
+                    'placeholder': 'Charalampos',
                 }
             ),
         }
