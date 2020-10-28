@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import main_page, add_argonaute
+from .views import main_page, add_argonaute, reset_argonautes
 
 urlpatterns = [
-    # Activity url
-    path('', main_page, name='main-page'),
+    # WildCodeSchool url
+    path('home', main_page, name='home'),
     path('add', add_argonaute, name = "add-argonaute"),
+    path('reset_argonautes', reset_argonautes, name = "reset-argonautes"),
 ]

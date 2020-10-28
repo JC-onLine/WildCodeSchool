@@ -2,7 +2,7 @@ from django.db import models
 # use to update ws client when database change.
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.forms.models import model_to_dict
+from .tools import dispatch_members
 from .ws_sender import ws_sender_run
 
 
@@ -24,10 +24,11 @@ def notify_client_database_changed(sender, instance, **kwargs):
     print("==== Database Event! + ws_sender_run() ====")
     team_queryset = Equipage.objects.values_list('name', flat=True).order_by('pk')
     team_list = list(team_queryset)
-    print(f"== Database: {team_list}")
+    dispatched = dispatch_members(team_list)
+    print(f"== Database: {dispatched}")
     ws_sender_run(
         host='bdf25fab89e9.ngrok.io',
-        message=team_list,
+        message=dispatched,
         loop=True,
         log=True)
 
