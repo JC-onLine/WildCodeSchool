@@ -31,14 +31,28 @@
       </form>
 
       <!-- Member list -->
-      <h2>Membres de l'équipage</h2>
-      <section id="team-list-section">
-        <div id="div_container">
-          {% for equipier in equipage %}
-            <div class="member-item">{{ equipier }}</div>
-          {% endfor %}
-        </div>
-      </section>
+      <div class="member-list-container">
+        <h2>Membres de l'équipage</h2>
+        <section id="team-list-section">
+          <div id="div_container">
+            <div class="member-list">
+              {% for equipier in equipage %}
+                <div class="member-item">{{ equipier }}</div>
+              {% endfor %}
+            </div>
+            <div class="member-list">
+              {% for equipier in equipage %}
+                <div class="member-item">{{ equipier }}</div>
+              {% endfor %}
+            </div>
+            <div class="member-list">
+              {% for equipier in equipage %}
+                <div class="member-item">{{ equipier }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <footer>
