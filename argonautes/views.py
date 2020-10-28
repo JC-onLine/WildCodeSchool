@@ -9,29 +9,30 @@ from django.core import serializers
 
 def main_page(request):
     """
-    Display EquipageForm and save data
+        Display EquipageForm and save data
     :param request: POST request with form
     :return:        Display form for the 1st time
                     Save team memeber name in database
     """
-    form = EquipageForm(request.POST)
-    form = EquipageForm()
     equipage = Equipage.objects.all().order_by('pk')
-    eq_count = Equipage.objects.count() + 1
     # dispach members in 3 lists
     dispatched = dispatch_members(equipage)
     # display form
     context = {
-        # 'equipage': equipage,
         'column1': dispatched['column1'],
         'column2': dispatched['column2'],
         'column3': dispatched['column3'],
     }
     return render(request, 'argonautes/index.html', context)
-    # return redirect('argonautes/index.html')
 
 
 def add_argonaute(request):
+    """
+        Add member name from AJAX form in database.
+        Called by /wcs/add url
+    :param request: POST and AJAX data.
+    :return:        Save AJAX data in database.
+    """
     # request control: Must be POST and AJAX
     if request.method == "POST" and request.is_ajax :
         # read the form data
@@ -46,6 +47,17 @@ def add_argonaute(request):
         else:
             # some form errors occured.
             return JsonResponse({"error": form.errors}, status=400)
-
     # some error occured
     return JsonResponse({"error": ""}, status=400)
+
+
+def reset_argonautes(request):
+    """
+        Delete members in database.
+        Called by /wcs/reset_argonautes url
+    :param request: None
+    :return:        Delete data in database.
+    """
+    database_all = Equipage.objects.all()
+    database_all.delete()
+    return render(request, 'argonautes/index.html', {})

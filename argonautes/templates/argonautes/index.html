@@ -35,17 +35,17 @@
         <h2>Membres de l'équipage</h2>
         <section id="team-list-section">
           <div id="div_container">
-            <div class="member-list">
+            <div id="column1" class="member-list">
               {% for member in column1 %}
                 <div class="member-item">{{ member }}</div>
               {% endfor %}
             </div>
-            <div class="member-list">
+            <div id="column2" class="member-list">
               {% for member in column2 %}
                 <div class="member-item">{{ member }}</div>
               {% endfor %}
             </div>
-            <div class="member-list">
+            <div id="column3" class="member-list">
               {% for member in column3 %}
                 <div class="member-item">{{ member }}</div>
               {% endfor %}
@@ -68,6 +68,8 @@
     <script src="{% static 'argonautes/js/argonautes/db-feedback.js' %}"
         type="text/javascript"></script>
     <script src="{% static 'argonautes/js/argonautes/js-form.js' %}"
+        type="text/javascript"></script>
+    <script src="{% static 'argonautes/js/argonautes/functions/list-draw.js' %}"
         type="text/javascript"></script>
   </body>
 </html>
