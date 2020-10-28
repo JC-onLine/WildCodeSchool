@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .form import EquipageForm
 from .models import Equipage
+from .tools import dispatch_members
 # Used for ajasx POST
 from django.http import JsonResponse
 from django.core import serializers
@@ -13,29 +14,21 @@ def main_page(request):
     :return:        Display form for the 1st time
                     Save team memeber name in database
     """
-    # form = EquipageForm(request.POST)
+    form = EquipageForm(request.POST)
     form = EquipageForm()
     equipage = Equipage.objects.all().order_by('pk')
-    # eq_count = Equipage.objects.count() + 1
-    # catch POST form response
-    # if request.method == 'POST':
-        # if form.is_valid():
-            # form.save()
-            # context = {
-            #     'equipage': equipage,
-            #     'eq_count': eq_count,
-            #     'form': form
-            # }
-            # return render(request, 'argonautes/index.html', context)
-    # else:
-    #     form = EquipageForm()
+    eq_count = Equipage.objects.count() + 1
+    # dispach members in 3 lists
+    dispatched = dispatch_members(equipage)
     # display form
     context = {
-        'equipage': equipage,
-        # 'eq_count': eq_count,
-        'form': form
+        # 'equipage': equipage,
+        'column1': dispatched['column1'],
+        'column2': dispatched['column2'],
+        'column3': dispatched['column3'],
     }
     return render(request, 'argonautes/index.html', context)
+    # return redirect('argonautes/index.html')
 
 
 def add_argonaute(request):

@@ -26,8 +26,8 @@
       <form id="member-form" action="" method="POST" class="new-member-form">
         {% csrf_token %}
         <label for="name">Nom de l&apos;Argonaute</label>
-        {{ form.name }}
-        <input name="validation" type="submit" value="Envoyer">
+        <input id="name" name="name" type="text" placeholder="Charalampos" required/>
+        <input type="submit" value="Envoyer">
       </form>
 
       <!-- Member list -->
@@ -36,18 +36,18 @@
         <section id="team-list-section">
           <div id="div_container">
             <div class="member-list">
-              {% for equipier in equipage %}
-                <div class="member-item">{{ equipier }}</div>
+              {% for member in column1 %}
+                <div class="member-item">{{ member }}</div>
               {% endfor %}
             </div>
             <div class="member-list">
-              {% for equipier in equipage %}
-                <div class="member-item">{{ equipier }}</div>
+              {% for member in column2 %}
+                <div class="member-item">{{ member }}</div>
               {% endfor %}
             </div>
             <div class="member-list">
-              {% for equipier in equipage %}
-                <div class="member-item">{{ equipier }}</div>
+              {% for member in column3 %}
+                <div class="member-item">{{ member }}</div>
               {% endfor %}
             </div>
           </div>

@@ -19,5 +19,5 @@ import argonautes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('argonautes.urls')),
+    path('wcs/', include('argonautes.urls')),
 ]
