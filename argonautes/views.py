@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .form import EquipageForm
 from .models import Equipage
 from .tools import dispatch_members
+from django.conf import settings
 # Used for ajasx POST
 from django.http import JsonResponse
 from django.core import serializers
@@ -19,6 +20,7 @@ def main_page(request):
     dispatched = dispatch_members(equipage)
     # display form
     context = {
+        'django_url': settings.DJANGO_URL,
         'column1': dispatched['column1'],
         'column2': dispatched['column2'],
         'column3': dispatched['column3'],

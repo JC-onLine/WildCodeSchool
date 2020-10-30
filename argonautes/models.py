@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .tools import dispatch_members
 from .ws_sender import ws_sender_run
+from django.conf import settings
 
 
 class Equipage(models.Model):
@@ -21,16 +22,18 @@ def notify_client_database_changed(sender, instance, **kwargs):
         and it makes a POST request on the WAMP-HTTP bridge (crossbar),
         allowing us to make a WAMP publication from Django.
     """
-    print("==== Database Event! + ws_sender_run() ====")
+    log = False
+
+    if log: print("==== Database Event! + ws_sender_run() ====")
     team_queryset = Equipage.objects.values_list('name', flat=True).order_by('pk')
     team_list = list(team_queryset)
     dispatched = dispatch_members(team_list)
-    print(f"== Database: {dispatched}")
+    if log: print(f"== Database: {dispatched}")
     ws_sender_run(
-        host='bdf25fab89e9.ngrok.io',
+        host=settings.DJANGO_URL,
         message=dispatched,
         loop=True,
-        log=True)
+        log=False)
 
 
 post_save.connect(notify_client_database_changed, sender=Equipage)
