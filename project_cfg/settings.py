@@ -119,6 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+# ==== CUSTOM PROJECT SECTION ====
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -126,3 +127,9 @@ USE_TZ = True
 # Static Django with 'manage.py collectstatic'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+# Get DJANGO_URL from os env:
+DJANGO_URL = os.environ.get('DJANGO_URL')
+if DJANGO_URL is None:
+    DJANGO_URL = '127.0.0.1:8080'
+
