@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+# Get DJANGO_URL from os env:
+DJANGO_URL = os.environ.get('DJANGO_URL')
+if DJANGO_URL is None:
+    DJANGO_URL = '127.0.0.1:8080'
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,9 +34,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'bdf25fab89e9.ngrok.io',
+    DJANGO_URL,
 ]
-
+print(f"==== settings.py: {ALLOWED_HOSTS}")
 
 # Application definition
 
@@ -127,9 +134,4 @@ USE_TZ = True
 # Static Django with 'manage.py collectstatic'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
-# Get DJANGO_URL from os env:
-DJANGO_URL = os.environ.get('DJANGO_URL')
-if DJANGO_URL is None:
-    DJANGO_URL = '127.0.0.1:8080'
 
