@@ -12,6 +12,21 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+# Get DJANGO Setup from os env: If 'None' go to local development mode.
+# Get DJANGO_URL from os env:
+DJANGO_URL = os.environ.get('DJANGO_URL')
+if DJANGO_URL is None:
+    DJANGO_URL = '127.0.0.1:8080'
+# Get DJANGO_DEBUG from os env:
+DJANGO_DEBUG = os.environ.get('DEBUG', False)
+if DJANGO_DEBUG is None:
+    DJANGO_DEBUG = True
+# Get DJANGO_KEY from os env:
+DJANGO_KEY = os.environ.get('DJANGO_KEY')
+if DJANGO_KEY is None:
+    DJANGO_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,16 +35,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
+SECRET_KEY = DJANGO_KEY
 
 # SECURITY WARNING: don't ws_sender_run with debug turned on in production!
-DEBUG = True
+# Custum: Add DEBUG and DJANGO_URL info in environment OS:
+DEBUG = DJANGO_DEBUG
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'bdf25fab89e9.ngrok.io',
+    DJANGO_URL,
 ]
-
 
 # Application definition
 
@@ -128,8 +143,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-# Get DJANGO_URL from os env:
-DJANGO_URL = os.environ.get('DJANGO_URL')
-if DJANGO_URL is None:
-    DJANGO_URL = '127.0.0.1:8080'
-
+# Display settings.py details
+print(f"==== settings.py: ALLOWED_HOSTS={ALLOWED_HOSTS}")
+print(f"==== settings.py: DEBUG={DEBUG}")
+print(f"==== settings.py: SECRET_KEY={SECRET_KEY}")
