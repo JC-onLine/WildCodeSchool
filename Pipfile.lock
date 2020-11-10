@@ -801,6 +801,7 @@
                 "sha256:f3c19e5bd42bbe4bf345704ad7c326c74d3fd7a1b3844987853bef180be638d4"
             ],
             "index": "pypi",
+            "markers": "python_version >= '3.7'",
             "version": "==20.3.0"
         },
         "txaio": {
