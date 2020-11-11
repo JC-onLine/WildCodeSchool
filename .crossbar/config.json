@@ -61,7 +61,7 @@
                         },
                         "static": {
                             "type": "static",
-                            "directory": "../argonautes/static",
+                            "directory": "../static",
                             "options": {
                                 "enable_directory_listing": true
                             }
