@@ -9,26 +9,34 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
+import os, json
 from pathlib import Path
-
-# Get DJANGO Setup from os env: If 'None' go to local development mode.
-# Get DJANGO_URL from os env:
-DJANGO_URL = os.environ.get('DJANGO_URL')
-if DJANGO_URL is None:
-    DJANGO_URL = '127.0.0.1:8080'
-# Get DJANGO_DEBUG from os env:
-DJANGO_DEBUG = os.environ.get('DEBUG', False)
-if DJANGO_DEBUG is None:
-    DJANGO_DEBUG = True
-# Get DJANGO_KEY from os env:
-DJANGO_KEY = os.environ.get('DJANGO_KEY')
-if DJANGO_KEY is None:
-    DJANGO_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# #### BEGIN CUSTOM ENV ====
+# Get DJANGO Setup from private JSON file: If 'None' go to local dev mode.
+SECURE_ZONE = os.path.join(BASE_DIR, '..', 'secure-zone')
+DJANGO_ENV = os.path.join(SECURE_ZONE, 'django-env.json')
+try:
+    with open(DJANGO_ENV, 'r') as django_env:
+        settings_data = django_env.read()
+    settings_obj = json.loads(settings_data)    # pars to JSON object
+    # Get DJANGO ENV from JSON file:
+    DJANGO_URL = str(settings_obj['DJANGO_URL'])
+    DJANGO_DEBUG = str(settings_obj['DJANGO_DEBUG'])
+    DJANGO_KEY = str(settings_obj['DJANGO_KEY'])
+except IOError as err:
+    # No DJANGO ENV from JSON file or force to DEV mode:
+    print(f"==== /!\\ ==== Settings.py: File IOError {err}")
+    print(f"==== /!\\ ==== Settings.py: FORCE DEVELOPMENT MODE")
+    DJANGO_URL = '127.0.0.1'
+    DJANGO_DEBUG = True
+    DJANGO_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
+# #### END CUSTOM ENV ====
+
 
 
 # Quick-start development settings - unsuitable for production
