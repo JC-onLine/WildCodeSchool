@@ -7,7 +7,7 @@ from twisted.internet import reactor
 """
     Send a Websocket message to JavaScript page client side.
 :param host:        Hostname or IP adresse. Default=localhost
-:param channel:     Channel id to JS explatation
+:param channel:     Channel id to JS exploitation
 :param message:     Message to send. Default='Hello world!'
 :param separator:   Can split message to many <div>
 :loop:              Use to stop 'reactor' in command line mode.
