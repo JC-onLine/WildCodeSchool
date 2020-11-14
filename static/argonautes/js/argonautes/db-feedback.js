@@ -15,9 +15,6 @@ window.addEventListener("load", function(){
         url: wamp_url,
         realm: 'realm1'
     });
-    var column1;
-    var column2;
-    var column3;
     if (log===true) { console.log("db-feedback.js: Autobahn definition with: " + wamp_url) };
 
     // Connection opened
@@ -34,6 +31,7 @@ window.addEventListener("load", function(){
             if (log===true) { console.log("db-feedback.js: team_list_json.topic=" + team_list_json.topic)};
             if (team_list_json.topic !== "") {
                 if (log===true) { console.log("db-feedback.js: start remove div_container...")};
+                let node_container;
                 node_container = document.getElementById("div_container");
                 // remove node_container
                 if (node_container) {
