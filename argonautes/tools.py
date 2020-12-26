@@ -1,4 +1,4 @@
-def dispatch_members(members):
+def dispatch_members_3_columns(members):
     """ Dispach members in 3 lists.
         Split the members list in 3 lists.
         It's use to display 3 column un web page.

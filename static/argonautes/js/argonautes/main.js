@@ -1,5 +1,5 @@
 window.addEventListener("load", function(){
-    const log = false;
+    const log = true;
     let wamp_url
     // Get hostname from DJANGO_URL
     const hostname = DJANGO_URL;
@@ -9,15 +9,30 @@ window.addEventListener("load", function(){
     } else {
         wamp_url = "wss://" + hostname + "/ws";
     }
-    /* Connection configuration to our WAMP router */
-    var connection = new autobahn.Connection({
+    let node_container;
+
+    /* ==== Displayed this page on first time ==== */
+    if (log===true) { console.log("main.js: starting create 'div_container'...")};
+    let section = document.getElementById("team-list-section");
+    let div_container_new = document.createElement("div");
+    div_container_new.id = 'div_container';
+    div_container_new.setAttribute("class", "div_container");
+    if (log===true) { console.log(
+        "main.js: 'team_list_on_first_open.topic' " + team_list_on_first_open.topic
+    )};
+    // draw column 1,2 and in DOM
+    draw_column(div_container_new, team_list_on_first_open.topic.column1, log);
+    draw_column(div_container_new, team_list_on_first_open.topic.column2, log);
+    draw_column(div_container_new, team_list_on_first_open.topic.column3, log);
+    section.appendChild(div_container_new);
+    console.log("main.js: DOM create done.");
+
+    /* ==== Connection configuration to our WAMP router ==== */
+    let connection = new autobahn.Connection({
         // default url= url: 'ws://127.0.0.1:8080/ws',
         url: wamp_url,
         realm: 'realm1'
     });
-    var column1;
-    var column2;
-    var column3;
     if (log===true) { console.log("main.js: Autobahn definition with: " + wamp_url) };
 
     // Connection opened
@@ -47,7 +62,7 @@ window.addEventListener("load", function(){
                     div_container_new.setAttribute("class", "div_container");
                     if (log===true) { console.log("main.js: 'div_container_new' " + div_container_new)};
 
-                    // draw column 1 in DOM
+                    // draw column 1,2 and in DOM
                     draw_column(div_container_new, team_list_json.topic.column1, log);
                     draw_column(div_container_new, team_list_json.topic.column2, log);
                     draw_column(div_container_new, team_list_json.topic.column3, log);
