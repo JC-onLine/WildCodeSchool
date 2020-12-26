@@ -6,7 +6,6 @@ from django.conf import settings
 # Used for ajasx POST
 from django.http import JsonResponse
 from django.core import serializers
-import json
 
 
 def main_page(request):

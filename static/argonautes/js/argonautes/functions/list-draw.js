@@ -4,7 +4,7 @@ function draw_column(root_div, column_data, log) {
     // :param:  'column_data'   Data to display.
     // :param:  'log':          Trace on browser console.
 
-    if (log===true) { console.log("list-draw.js: START "); }
+    if (log===true) { console.log("tools.js: START "); }
     let column_div;
     let member_div;
     let member_id;
@@ -12,7 +12,7 @@ function draw_column(root_div, column_data, log) {
     column_div = document.createElement("div");
     column_div.setAttribute("class", "member-list");
     column_data.forEach(function(member_name, index) {
-        if (log===true) { console.log("list-draw.js: forEach: " + member_name); }
+        if (log===true) { console.log("tools.js: forEach: " + member_name); }
         // create member div
         member_div = document.createElement("div");
         member_id = index+1;

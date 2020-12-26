@@ -11,7 +11,7 @@ window.addEventListener("load", function(){
     }
     let node_container;
 
-    /* ==== Displayed of this page on first time ==== */
+    /* ==== Displayed this page on first time ==== */
     if (log===true) { console.log("main.js: starting create 'div_container'...")};
     let section = document.getElementById("team-list-section");
     let div_container_new = document.createElement("div");
@@ -20,7 +20,6 @@ window.addEventListener("load", function(){
     if (log===true) { console.log(
         "main.js: 'team_list_on_first_open.topic' " + team_list_on_first_open.topic
     )};
-
     // draw column 1,2 and in DOM
     draw_column(div_container_new, team_list_on_first_open.topic.column1, log);
     draw_column(div_container_new, team_list_on_first_open.topic.column2, log);
