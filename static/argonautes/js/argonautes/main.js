@@ -49,6 +49,8 @@ window.addEventListener("load", function(){
             let team_list_json = args[0];
             if (log===true) { console.log("main.js: team_list_json.topic=" + team_list_json.topic)}
             if (team_list_json.topic !== "") {
+                if (log===true) { console.log("main.js: boot_page_db = null")}
+                boot_page_db = null;
                 if (log===true) { console.log("main.js: start remove div_container...")}
                 node_container = document.getElementById("div_container");
                 // remove node_container

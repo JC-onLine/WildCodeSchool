@@ -12,5 +12,5 @@ const DJANGO_URL = JSON.parse(
   document.getElementById('django_url').textContent);
 
 // Application data: database to display on page boot
-const boot_page_db = JSON.parse(
+let boot_page_db = JSON.parse(
   document.getElementById('boot_page_db').textContent);
