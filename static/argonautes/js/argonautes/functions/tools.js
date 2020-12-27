@@ -15,7 +15,7 @@ function draw_column(column_id, root_div, column_data, log) {
     // create counter_div
     counter_div = document.createElement("div");
     counter_div.id = "member_count"+column_id;
-    counter_div.setAttribute("class", "member-count");
+    counter_div.setAttribute("class", "count member-count");
     counter_div.textContent = column_data.length;
     column_div.appendChild(counter_div);
     column_data.forEach(function(member_name, index) {
@@ -55,3 +55,8 @@ function draw_3_colums(target_container, data, log) {
 }
 */
 
+function calcul_total(data) {
+    return  data.topic.column1.length +
+            data.topic.column2.length +
+            data.topic.column3.length;
+}

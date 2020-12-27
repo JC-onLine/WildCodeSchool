@@ -13,19 +13,24 @@ window.addEventListener("load", function(){
     }
 
     /* ==== Display this page on boot ==== */
-    if (log===true) { console.log("main.js: starting create 'div_container'...")}
+    if (log===true) { console.log("main.js: starting create 'list_member_container'...")}
+    // refresh total count
+    // let total_count = boot_page_db.topic.column1.length +
+    //                   boot_page_db.topic.column2.length +
+    //                   boot_page_db.topic.column3.length;
+    document.getElementById("total-count").textContent = calcul_total(boot_page_db);
     let section = document.getElementById("team-list-section");
-    let div_container_new = document.createElement("div");
-    div_container_new.id = 'div_container';
-    div_container_new.setAttribute("class", "div_container");
+    let list_member_container_new = document.createElement("div");
+    list_member_container_new.id = 'list_member_container';
+    list_member_container_new.setAttribute("class", "list_member_container");
     if (log===true) { console.log(
         "main.js: 'team_list_on_first_open.topic' " + boot_page_db.topic
     )}
     // draw column 1,2 and 3 in DOM
-    draw_column(1, div_container_new, boot_page_db.topic.column1, log);
-    draw_column(2, div_container_new, boot_page_db.topic.column2, log);
-    draw_column(3, div_container_new, boot_page_db.topic.column3, log);
-    section.appendChild(div_container_new);
+    draw_column(1, list_member_container_new, boot_page_db.topic.column1, log);
+    draw_column(2, list_member_container_new, boot_page_db.topic.column2, log);
+    draw_column(3, list_member_container_new, boot_page_db.topic.column3, log);
+    section.appendChild(list_member_container_new);
     console.log("main.js: DOM create done.");
 
     /* ==== Connection configuration to our WAMP router ==== */
@@ -51,25 +56,26 @@ window.addEventListener("load", function(){
             if (team_list_json.topic !== "") {
                 if (log===true) { console.log("main.js: boot_page_db = null")}
                 boot_page_db = null;
-                if (log===true) { console.log("main.js: start remove div_container...")}
-                node_container = document.getElementById("div_container");
+                if (log===true) { console.log("main.js: start remove list_member_container...")}
+                node_container = document.getElementById("list_member_container");
                 // remove node_container
                 if (node_container) {
                     node_container.remove();
-                    if (log===true) { console.log("main.js: 'div_container' removed.")}
+                    if (log===true) { console.log("main.js: 'list_member_container' removed.")}
 
-                    if (log===true) { console.log("main.js: starting create 'div_container'...")}
+                    if (log===true) { console.log("main.js: starting create 'list_member_container'...")}
                     let section = document.getElementById("team-list-section");
-                    let div_container_new = document.createElement("div");
-                    div_container_new.id = 'div_container';
-                    div_container_new.setAttribute("class", "div_container");
-                    if (log===true) { console.log("main.js: 'div_container_new' " + div_container_new)}
+                    let list_member_container_new = document.createElement("div");
+                    list_member_container_new.id = 'list_member_container';
+                    list_member_container_new.setAttribute("class", "list_member_container");
+                    if (log===true) { console.log("main.js: 'list_member_container_new' " + list_member_container_new)}
 
                     // draw column 1,2 and in DOM
-                    draw_column(1, div_container_new, team_list_json.topic.column1, log);
-                    draw_column(2, div_container_new, team_list_json.topic.column2, log);
-                    draw_column(3, div_container_new, team_list_json.topic.column3, log);
-                    section.appendChild(div_container_new);
+                    document.getElementById("total-count").textContent = calcul_total(team_list_json);
+                    draw_column(1, list_member_container_new, team_list_json.topic.column1, log);
+                    draw_column(2, list_member_container_new, team_list_json.topic.column2, log);
+                    draw_column(3, list_member_container_new, team_list_json.topic.column3, log);
+                    section.appendChild(list_member_container_new);
                     console.log("main.js: DOM create done.");
                 }else{
                     console.log("main.js: 'node_container' not found.");

@@ -36,7 +36,10 @@
 
       <!-- Member list -->
       <div class="member-list-container">
-        <h2>Membres de l'équipage</h2>
+        <div class="member-list-title">
+          <h3 class="member-title">Membres de l'équipage:&nbsp;</h3>
+          <h3 class="count" id="total-count"></h3>
+        </div>
         <br />
         <div id="team-list-section">
         </div>
@@ -58,7 +61,7 @@
 
     {# Send Django Views data to JavaScript in safe mode #}
     {# Details: https://adamj.eu/tech/2020/02/18/safely-including-data-for-javascript-in-a-django-template/#}
-    {# See 'dj-to-js-data.js' for specific Django/JavaScript exchange #}
+    {# See 'dj-to-js-data.js' for specific Django to JavaScript exchange #}
     {{ django_url|json_script:"django_url" }}
     {{ boot_page_db|json_script:"boot_page_db" }}
 
