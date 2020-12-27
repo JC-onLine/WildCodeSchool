@@ -37,25 +37,9 @@
       <!-- Member list -->
       <div class="member-list-container">
         <h2>Membres de l'équipage</h2>
+        <br />
         <div id="team-list-section">
-<!--          <div id="div_container">-->
-<!--            <div id="column1" class="member-list">-->
-<!--              {% for member in column1 %}-->
-<!--                <div class="member-item">{{ member }}</div>-->
-<!--              {% endfor %}-->
-<!--            </div>-->
-<!--            <div id="column2" class="member-list">-->
-<!--              {% for member in column2 %}-->
-<!--                <div class="member-item">{{ member }}</div>-->
-<!--              {% endfor %}-->
-<!--            </div>-->
-<!--            <div id="column3" class="member-list">-->
-<!--              {% for member in column3 %}-->
-<!--                <div class="member-item">{{ member }}</div>-->
-<!--              {% endfor %}-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+        </div>
       </div>
     </section>
 
@@ -72,14 +56,11 @@
       </p>
     </footer>
 
-    <!-- Send Django Views data to JavaScript -->
-    {{ team_list_on_first_open|json_script:"team_list_on_first_open" }}
-    <script>
-      const DJANGO_URL = "{{ django_url }}";
-      const team_list_on_first_open = JSON.parse(
-          document.getElementById('team_list_on_first_open').textContent
-          );
-    </script>
+    {# Send Django Views data to JavaScript in safe mode #}
+    {# Details: https://adamj.eu/tech/2020/02/18/safely-including-data-for-javascript-in-a-django-template/#}
+    {# See 'dj_to_js_data.js' for specific Django/JavaScript exchange #}
+    {{ boot_page_db|json_script:"boot_page_db" }}
+    {{ DJANGO_URL|json_script:"django_url" }}
 
     <!-- The JS lib allowing to use websocket by autobahn. -->
     <script src="{% static 'argonautes/js/autobahn/autobahn.min.js' %}"></script>
@@ -88,6 +69,7 @@
     <!-- Call JS app script -->
     <script src="{% static 'argonautes/js/argonautes/main.js' %}"></script>
     <script src="{% static 'argonautes/js/argonautes/js-form.js' %}"></script>
+    <script src="{% static 'argonautes/js/argonautes/dj_to_js_data.js' %}"></script>
     <script src="{% static 'argonautes/js/argonautes/functions/tools.js' %}"></script>
   </body>
 </html>
