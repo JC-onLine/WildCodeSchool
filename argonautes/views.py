@@ -20,7 +20,6 @@ def main_page(request):
     team_list = list(team_queryset)
     # dispach members in 3 lists
     team_dispatched = dispatch_members_3_columns(team_list)
-    print(f"team_dispatched={team_dispatched}")
     # json compose for JavaScript
     boot_page_db = {
         'topic': team_dispatched,

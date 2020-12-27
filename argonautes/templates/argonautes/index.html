@@ -58,18 +58,18 @@
 
     {# Send Django Views data to JavaScript in safe mode #}
     {# Details: https://adamj.eu/tech/2020/02/18/safely-including-data-for-javascript-in-a-django-template/#}
-    {# See 'dj_to_js_data.js' for specific Django/JavaScript exchange #}
+    {# See 'dj-to-js-data.js' for specific Django/JavaScript exchange #}
+    {{ django_url|json_script:"django_url" }}
     {{ boot_page_db|json_script:"boot_page_db" }}
-    {{ DJANGO_URL|json_script:"django_url" }}
 
     <!-- The JS lib allowing to use websocket by autobahn. -->
     <script src="{% static 'argonautes/js/autobahn/autobahn.min.js' %}"></script>
     <!-- The JS lib allowing to use jQuery. -->
     <script src="{% static 'argonautes/js/jquery/jquery-3.5.1.min.js' %}"></script>
     <!-- Call JS app script -->
+    <script src="{% static 'argonautes/js/argonautes/dj-to-js-data.js' %}"></script>
     <script src="{% static 'argonautes/js/argonautes/main.js' %}"></script>
     <script src="{% static 'argonautes/js/argonautes/js-form.js' %}"></script>
-    <script src="{% static 'argonautes/js/argonautes/dj_to_js_data.js' %}"></script>
     <script src="{% static 'argonautes/js/argonautes/functions/tools.js' %}"></script>
   </body>
 </html>
