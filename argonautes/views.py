@@ -15,19 +15,19 @@ def main_page(request):
     :return:        Display form for the 1st time
                     Save team memeber name in database
     """
-    team_queryset = Equipage.objects.values_list('name', flat=True).order_by('pk')
+    team_queryset = \
+        Equipage.objects.values_list('name', flat=True).order_by('pk')
     team_list = list(team_queryset)
     # dispach members in 3 lists
     team_dispatched = dispatch_members_3_columns(team_list)
-    print(f"team_dispatched={team_dispatched}")
     # json compose for JavaScript
-    team_list_on_first_open = {
+    boot_page_db = {
         'topic': team_dispatched,
     }
     # display form
     context = {
         'django_url': settings.DJANGO_URL,
-        'team_list_on_first_open': team_list_on_first_open,
+        'boot_page_db': boot_page_db,
         'column1': team_dispatched['column1'],
         'column2': team_dispatched['column2'],
         'column3': team_dispatched['column3'],
@@ -43,14 +43,14 @@ def add_argonaute(request):
     :return:        Save AJAX data in database.
     """
     # request control: Must be POST and AJAX
-    if request.method == "POST" and request.is_ajax :
+    if request.method == "POST" and request.is_ajax:
         # read the form data
         form = EquipageForm(request.POST)
         # check valid data and save
         if form.is_valid():
             current_data = form.save()
             # convert data to json for js
-            current_data_json = serializers.serialize('json', [ current_data, ])
+            current_data_json = serializers.serialize('json', [current_data, ])
             # send data to client.
             return JsonResponse({"instance": current_data_json}, status=200)
         else:

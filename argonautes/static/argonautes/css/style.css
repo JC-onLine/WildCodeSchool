@@ -25,7 +25,6 @@ main {
 
 /* ==== HEADER ==== */
 header {
-  background: #f4f4f4;
   background: #5A5A5A;
   text-align: center;
   padding: 2em;
@@ -46,7 +45,7 @@ label {
   margin-bottom: 0.5em;
 }
 .new-member-form {
-  margin: 2em 0 4em 0;
+  margin: 1rem 0 2rem 0;
   text-align: center;
 }
 .member-item {
@@ -55,7 +54,25 @@ label {
 .member-list-container {
   /*background: #212121;*/
 }
-#div_container {
+
+/* ==== Title container ==== */
+.member-list-title {
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  grid-gap: 0;
+  align-self: start;
+}
+.member-title {
+  grid-column: 2 / 3;
+  justify-self: center;
+}
+#total-count {
+  align-self: center;
+  justify-self: start;
+}
+
+/* ==== dynamic DOM member list container ====*/
+#list_member_container {
   grid-row: common-top / common-bottom;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -64,7 +81,21 @@ label {
 }
 .member-list {
   background: #2F2F2F;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.count {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  border-radius: 12.5rem;
+  background: #f76c6c;
+  color: #000000;
+  padding-top: 0.3rem;
+}
+.member-count {
+  transform: translateY(-1.25rem);
 }
 
 /* ==== FOOTER ==== */
