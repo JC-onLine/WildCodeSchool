@@ -12,31 +12,41 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os, json
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ==== BEGIN CUSTOM ENV ====
-# Get DJANGO Setup from private JSON file: If 'None' go to local dev mode.
-SECURE_ZONE = os.path.join(BASE_DIR, '..', 'secure-zone')
-DJANGO_ENV = os.path.join(SECURE_ZONE, 'django-env.json')
+# -------------------------------------
+# ==== BEGIN ENVIRONMENT DETECTION ====
+# -- SAFE SETTINGS --
+# Get DJANGO Setup from 'secure-zone' JSON file: django-env.json
+# - If django-env.json readable, go to Production mode.
+# - If 'None' go to Development in demo mode.
+SECURE_DIR = os.path.join(BASE_DIR, '..', 'secure-zone')
+DJANGO_ENV = os.path.join(SECURE_DIR, 'django-env.json')
 try:
     with open(DJANGO_ENV, 'r') as django_env:
         settings_data = django_env.read()
-    settings_obj = json.loads(settings_data)    # pars to JSON object
+    settings_obj = json.loads(settings_data)    # pars file to JSON object
     # Get DJANGO ENV from JSON file:
     DJANGO_URL = str(settings_obj['DJANGO_URL'])
     DJANGO_DEBUG = str(settings_obj['DJANGO_DEBUG'])
     DJANGO_KEY = str(settings_obj['DJANGO_KEY'])
 except IOError as err:
-    # No DJANGO ENV from JSON file or force to DEV mode:
+    # No DJANGO ENV from JSON file so go to DEV mode:
     print(f"==== /!\\ ==== Settings.py: File IOError {err}")
-    print(f"==== /!\\ ==== Settings.py: FORCE DEVELOPMENT MODE")
+    print(f"==== /!\\ ==== Settings.py: FORCE DEVELOPMENT & DEMO MODE")
     DJANGO_URL = '127.0.0.1'
     DJANGO_DEBUG = True
     DJANGO_KEY = '=u+udiqp%x@g$0-w9=82i3*g6tl-edrdvpzbpqo$^nz@&&jrit'
-# #### END CUSTOM ENV ====
-
+# -- DATABASE ENVIRONMENT --
+if os.path.isfile(BASE_DIR / '..' / 'secure-zone' / 'db.sqlite3'):
+    SQLITE_FILE = BASE_DIR / '..' / 'secure-zone' / 'db.sqlite3'
+    print(f"==== Settings.py: PRODUCTION DATABASE")
+else:
+    SQLITE_FILE = BASE_DIR / 'db.sqlite3'
+    print(f"==== /!\\ ==== Settings.py: DEVELOPMENT DATABASE")
+# ==== END ENVIRONMENT DETECTION ====
+# -----------------------------------
 
 
 # Quick-start development settings - unsuitable for production
@@ -101,19 +111,10 @@ WSGI_APPLICATION = 'project_cfg.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-# ==== TEST DEV/PROD ENV ====
-# PROD ENV
-if os.path.isfile(BASE_DIR / '..' / 'secure-zone' / 'db.sqlite3'):
-    sqlite = BASE_DIR / '..' / 'secure-zone' / 'db.sqlite3'
-    print(f"==== Settings.py: PRODUCTION DATABASE")
-else:
-    sqlite = BASE_DIR / 'db.sqlite3'
-    print(f"==== /!\\ ==== Settings.py: DEVELOPMENT DATABASE")
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': sqlite,
+        'NAME': SQLITE_FILE,
     }
 }
 
@@ -150,16 +151,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 # ==== CUSTOM PROJECT SECTION ====
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 # Static Django with 'manage.py collectstatic'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
-# Display settings.py details
+# ==== Display settings.py details ====
+print(f"==== settings.py: DJANGO_URL={DJANGO_URL}")
 print(f"==== settings.py: ALLOWED_HOSTS={ALLOWED_HOSTS}")
 print(f"==== settings.py: DEBUG={DEBUG}")
 print(f"==== settings.py: SECRET_KEY={SECRET_KEY}")
