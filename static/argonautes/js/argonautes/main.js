@@ -71,7 +71,17 @@ window.addEventListener("load", function(){
                     if (log===true) { console.log("main.js: 'list_member_container_new' " + list_member_container_new)}
 
                     // draw column 1,2 and in DOM
-                    document.getElementById("total-count").textContent = calcul_total(team_list_json);
+                    let members_total_count = calcul_total(team_list_json)
+                    document.getElementById("total-count").textContent = members_total_count;
+                    // disable input form if >= 35
+                    if (members_total_count >= 35) {
+                        document.getElementById("send-button").
+                            setAttribute("disabled", "disabled");
+                        document.getElementById("name").
+                            setAttribute("disabled", "disabled");
+                        document.getElementById("name").placeholder = " C'est complet !";
+                        document.getElementById("name").className = "full";
+                    }
                     draw_column(1, list_member_container_new, team_list_json.topic.column1, log);
                     draw_column(2, list_member_container_new, team_list_json.topic.column2, log);
                     draw_column(3, list_member_container_new, team_list_json.topic.column3, log);
