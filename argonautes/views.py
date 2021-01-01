@@ -7,6 +7,8 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.core import serializers
 
+# const settings for 'argonautes' app
+MEMBERS_MAXI = 35
 
 def main_page(request):
     """
@@ -15,10 +17,11 @@ def main_page(request):
     :return:        Display form for the 1st time
                     Save team memeber name in database
     """
+    # query setup
     team_queryset = \
         Equipage.objects.values_list('name', flat=True).order_by('pk')
     team_list = list(team_queryset)
-    # dispach members in 3 lists
+    # dispach member list in 3 columns
     team_dispatched = dispatch_members_3_columns(team_list)
     # json compose for JavaScript
     boot_page_db = {
@@ -26,11 +29,12 @@ def main_page(request):
     }
     # display form
     context = {
-        'django_url': settings.DJANGO_URL,
+        'DJANGO_URL': settings.DJANGO_URL,
         'boot_page_db': boot_page_db,
         'column1': team_dispatched['column1'],
         'column2': team_dispatched['column2'],
         'column3': team_dispatched['column3'],
+        'MEMBERS_MAXI': MEMBERS_MAXI,
     }
     return render(request, 'argonautes/index.html', context)
 

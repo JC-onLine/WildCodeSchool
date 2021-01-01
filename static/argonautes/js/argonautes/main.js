@@ -73,8 +73,8 @@ window.addEventListener("load", function(){
                     // draw column 1,2 and in DOM
                     let members_total_count = calcul_total(team_list_json)
                     document.getElementById("total-count").textContent = members_total_count;
-                    // disable input form if >= 35
-                    if (members_total_count >= 35) {
+                    // disable input form if > MEMBERS_MAXI
+                    if (members_total_count >= MEMBERS_MAXI) {
                         document.getElementById("send-button").
                             setAttribute("disabled", "disabled");
                         document.getElementById("name").

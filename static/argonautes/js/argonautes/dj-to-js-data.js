@@ -9,8 +9,12 @@
 
 // Django url for JavaScript Websockets:
 const DJANGO_URL = JSON.parse(
-  document.getElementById('django_url').textContent);
+  document.getElementById('DJANGO_URL').textContent);
 
 // Application data: database to display on page boot
 let boot_page_db = JSON.parse(
   document.getElementById('boot_page_db').textContent);
+
+// Application data: database to display on page boot
+let MEMBERS_MAXI = JSON.parse(
+  document.getElementById('MEMBERS_MAXI').textContent);
