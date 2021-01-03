@@ -6,9 +6,9 @@ from django.conf import settings
 # Used for ajasx POST
 from django.http import JsonResponse
 from django.core import serializers
-
 # const settings for 'argonautes' app
 MEMBERS_MAXI = 35
+
 
 def main_page(request):
     """

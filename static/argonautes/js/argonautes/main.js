@@ -26,7 +26,18 @@ window.addEventListener("load", function(){
     if (log===true) { console.log(
         "main.js: 'team_list_on_first_open.topic' " + boot_page_db.topic
     )}
-    // draw column 1,2 and 3 in DOM
+                    // draw column 1,2 and in DOM
+                    let members_total_count = calcul_total(boot_page_db)
+                    document.getElementById("total-count").textContent = members_total_count;
+                    // disable input form if > MEMBERS_MAXI
+                    if (members_total_count >= MEMBERS_MAXI) {
+                        document.getElementById("send-button").
+                            setAttribute("disabled", "disabled");
+                        document.getElementById("name").
+                            setAttribute("disabled", "disabled");
+                        document.getElementById("name").placeholder = " C'est complet !";
+                        document.getElementById("name").className = "full";
+                    }
     draw_column(1, list_member_container_new, boot_page_db.topic.column1, log);
     draw_column(2, list_member_container_new, boot_page_db.topic.column2, log);
     draw_column(3, list_member_container_new, boot_page_db.topic.column3, log);
