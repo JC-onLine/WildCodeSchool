@@ -1,7 +1,9 @@
 def dispatch_members_3_columns(members):
     """ Dispach members in 3 lists.
         Split the members list in 3 lists.
-        It's use to display 3 column un web page.
+        It's use to display 3 columns un web page.
+        Input :  Members in list format
+        Output:  Dict with many members in list format
     """
     # init destination lists
     column1 = []

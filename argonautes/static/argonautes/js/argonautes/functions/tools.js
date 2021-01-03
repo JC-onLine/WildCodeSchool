@@ -63,9 +63,9 @@ function draw_colums(target_container, members_data_json, log) {
                 document.getElementById("name").placeholder = " C'est complet !";
                 document.getElementById("name").className = "full";
             }
-            draw_column(1, list_member_container_new, members_data_json.topic.column1, log);
-            draw_column(2, list_member_container_new, members_data_json.topic.column2, log);
-            draw_column(3, list_member_container_new, members_data_json.topic.column3, log);
+            draw_column(1, list_member_container_new, members_data_json.column1, log);
+            draw_column(2, list_member_container_new, members_data_json.column2, log);
+            draw_column(3, list_member_container_new, members_data_json.column3, log);
             section.appendChild(list_member_container_new);
             console.log("draw_colums.js: DOM create done.");
         }else{
@@ -75,7 +75,7 @@ function draw_colums(target_container, members_data_json, log) {
 }
 
 function calcul_total(data) {
-    return  data.topic.column1.length +
-            data.topic.column2.length +
-            data.topic.column3.length;
+    return  data.column1.length +
+            data.column2.length +
+            data.column3.length;
 }

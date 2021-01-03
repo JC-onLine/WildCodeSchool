@@ -11,10 +11,10 @@
 const DJANGO_URL = JSON.parse(
   document.getElementById('DJANGO_URL').textContent);
 
-// Application data: database to display on page boot
-let boot_page_db = JSON.parse(
-  document.getElementById('boot_page_db').textContent);
+// Application settings
+let app_settings = JSON.parse(
+  document.getElementById('app_settings').textContent);
 
-// Application data: Members maxi
-let MEMBERS_MAXI = JSON.parse(
-  document.getElementById('MEMBERS_MAXI').textContent);
+// Application data: database to display on page boot
+let page_boot_db = JSON.parse(
+  document.getElementById('page_boot_db').textContent);

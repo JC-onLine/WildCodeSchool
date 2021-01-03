@@ -14,8 +14,8 @@ class Equipage(models.Model):
 
 
 class AppliSettings(models.Model):
-    members_maxi = models.IntegerField(blank=False, null=False, default=35)
-    columns_number = models.IntegerField(blank=False, null=False, default=3)
+    members_maxi = models.IntegerField(unique=True, default=20)
+    columns_number = models.IntegerField(unique=True, default=2)
 
 
 # @receiver(post_save, sender=Equipage, dispatch_uid="server_post_save")
@@ -28,8 +28,8 @@ def notify_client_database_changed(sender, instance, **kwargs):
     log = False
 
     if log: print("==== Database Event! + ws_sender_run() ====")
-    team_queryset = Equipage.objects.values_list('name', flat=True).\
-        order_by('pk')
+    team_queryset = \
+        Equipage.objects.values_list('name', flat=True).order_by('pk')
     team_list = list(team_queryset)
     team_dispatched = dispatch_members_3_columns(team_list)
     if log: print(f"== Database: {team_dispatched}")

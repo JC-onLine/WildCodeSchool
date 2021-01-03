@@ -44,13 +44,13 @@ def ws_sender_run(
     def called_on_joined():
         if log:
             print(f"ws_sender: onjoined: {data}")
-        json_data = {
-            'topic': data,
-        }
+        # json_data = {
+        #     'topic': data,
+        # }
         # Send to Crossbar/autobahn channel
-        app.session.publish(channel, json_data)
+        app.session.publish(channel, data)
         if log:
-            print(f"ws_sender: sending data: {json_data}")
+            print(f"ws_sender: sending data: {data}")
         if not loop:
             app.session.leave()
 

@@ -1,4 +1,12 @@
 window.addEventListener("load", function(){
+    /* Install Websocket listener
+    Data from Django:
+    - DJANGO_URL  : Use to link Websockets to the server.
+    - app_settings: Aplication settings like:
+                    - members_maxi  : Maxi of team members list.
+                    - columns_number: Number of columns in the web rendering page.
+    - page_boot_db: Members list on first diplay page from Django.
+    */
     const log = true;
     let wamp_url
     let node_container;
@@ -12,25 +20,23 @@ window.addEventListener("load", function(){
         wamp_url = "wss://" + hostname + "/ws";
     }
 
-    /* ==== Display this page on boot ==== */
+    /* ==== Display members colums on boot ==== */
     if (log===true) { console.log("main.js: starting create 'list_member_container'...")}
     // refresh total count
-    // let total_count = boot_page_db.topic.column1.length +
-    //                   boot_page_db.topic.column2.length +
-    //                   boot_page_db.topic.column3.length;
-    document.getElementById("total-count").textContent = calcul_total(boot_page_db);
+    document.getElementById("total-count").textContent = calcul_total(page_boot_db);
     let section = document.getElementById("team-list-section");
     let list_member_container_new = document.createElement("div");
     list_member_container_new.id = 'list_member_container';
     list_member_container_new.setAttribute("class", "list_member_container");
-    if (log===true) { console.log(
-        "main.js: 'team_list_on_first_open.topic' " + boot_page_db.topic
-    )}
+    if (log===true) {
+        console.log("main.js: app_settings.members_maxi " + app_settings.members_maxi);
+        console.log("main.js: app_settings.columns_number " + app_settings.columns_number);
+    }
                     // draw column 1,2 and in DOM
-                    let members_total_count = calcul_total(boot_page_db)
+                    let members_total_count = calcul_total(page_boot_db)
                     document.getElementById("total-count").textContent = members_total_count;
-                    // disable input form if > MEMBERS_MAXI
-                    if (members_total_count >= MEMBERS_MAXI) {
+                    // disable input form if members > maxi
+                    if (members_total_count >= app_settings.members_maxi) {
                         document.getElementById("send-button").
                             setAttribute("disabled", "disabled");
                         document.getElementById("name").
@@ -38,11 +44,11 @@ window.addEventListener("load", function(){
                         document.getElementById("name").placeholder = " C'est complet !";
                         document.getElementById("name").className = "full";
                     }
-    draw_column(1, list_member_container_new, boot_page_db.topic.column1, log);
-    draw_column(2, list_member_container_new, boot_page_db.topic.column2, log);
-    draw_column(3, list_member_container_new, boot_page_db.topic.column3, log);
-    section.appendChild(list_member_container_new);
-    console.log("main.js: DOM create done.");
+                    draw_column(1, list_member_container_new, page_boot_db.column1, log);
+                    draw_column(2, list_member_container_new, page_boot_db.column2, log);
+                    draw_column(3, list_member_container_new, page_boot_db.column3, log);
+                    section.appendChild(list_member_container_new);
+                    console.log("main.js: DOM create done.");
 
     /* ==== Connection configuration to our WAMP router ==== */
     let connection = new autobahn.Connection({
@@ -57,16 +63,16 @@ window.addEventListener("load", function(){
     connection.onopen = function(session) {
         console.log("main.js: Autobahn ws connected!");
 
-        // ==== TOPIC CHANNEL ====
-        //When we receive the 'client_topic' event, CLEAR/DISPLAY the page
+        // ==== RUNTIME CHANNEL ====
+        //When we receive the 'client_topic' event, CLEAR/DISPLAY the page columns.
         session.subscribe('argonautes_channel', function(args){
             console.log("main.js: --> client subscribed on argonautes_channel!");
             // get team_list_json from python autobahn websocket
             let team_list_json = args[0];
-            if (log===true) { console.log("main.js: team_list_json.topic=" + team_list_json.topic)}
-            if (team_list_json.topic !== "") {
-                if (log===true) { console.log("main.js: boot_page_db = null")}
-                boot_page_db = null;
+            if (team_list_json !== "") {
+                if (log===true) { console.log("main.js: team_list_json.column1=" + team_list_json.column1)}
+                if (log===true) { console.log("main.js: page_boot_db = null")}
+                page_boot_db = null;
                 if (log===true) { console.log("main.js: start remove list_member_container...")}
                 node_container = document.getElementById("list_member_container");
                 // remove node_container
@@ -84,8 +90,8 @@ window.addEventListener("load", function(){
                     // draw column 1,2 and in DOM
                     let members_total_count = calcul_total(team_list_json)
                     document.getElementById("total-count").textContent = members_total_count;
-                    // disable input form if > MEMBERS_MAXI
-                    if (members_total_count >= MEMBERS_MAXI) {
+                    // disable input form if members > maxi
+                    if (members_total_count >= app_settings.members_maxi) {
                         document.getElementById("send-button").
                             setAttribute("disabled", "disabled");
                         document.getElementById("name").
@@ -93,9 +99,9 @@ window.addEventListener("load", function(){
                         document.getElementById("name").placeholder = " C'est complet !";
                         document.getElementById("name").className = "full";
                     }
-                    draw_column(1, list_member_container_new, team_list_json.topic.column1, log);
-                    draw_column(2, list_member_container_new, team_list_json.topic.column2, log);
-                    draw_column(3, list_member_container_new, team_list_json.topic.column3, log);
+                    draw_column(1, list_member_container_new, team_list_json.column1, log);
+                    draw_column(2, list_member_container_new, team_list_json.column2, log);
+                    draw_column(3, list_member_container_new, team_list_json.column3, log);
                     section.appendChild(list_member_container_new);
                     console.log("main.js: DOM create done.");
                 }else{
