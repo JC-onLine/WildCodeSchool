@@ -15,6 +15,6 @@ const DJANGO_URL = JSON.parse(
 let boot_page_db = JSON.parse(
   document.getElementById('boot_page_db').textContent);
 
-// Application data: database to display on page boot
+// Application data: Members maxi
 let MEMBERS_MAXI = JSON.parse(
   document.getElementById('MEMBERS_MAXI').textContent);

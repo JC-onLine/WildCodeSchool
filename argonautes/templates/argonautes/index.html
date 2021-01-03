@@ -63,7 +63,7 @@
     {# Details: https://adamj.eu/tech/2020/02/18/safely-including-data-for-javascript-in-a-django-template/#}
     {# See 'dj-to-js-data.js' for specific Django to JavaScript exchange #}
     {{ DJANGO_URL|json_script:"DJANGO_URL" }}
-    {{ members_maxi|json_script:"MEMBERS_MAXI" }}
+    {{ MEMBERS_MAXI|json_script:"MEMBERS_MAXI" }}
     {{ boot_page_db|json_script:"boot_page_db" }}
 
     <!-- The JS lib allowing to use websocket by autobahn. -->
