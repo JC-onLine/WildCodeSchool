@@ -27,7 +27,7 @@ main {
 header {
   background: #5A5A5A;
   text-align: center;
-  padding: 2em;
+  padding: 1rem;
 }
 header img {
   max-width: 96px;
@@ -70,6 +70,13 @@ label {
   align-self: center;
   justify-self: start;
 }
+.full {
+  color: #000000;
+  background: #f76c6c;
+  width: 17.66rem;
+  height: 3.4rem;
+  border-radius: 0.5rem;
+}
 
 /* ==== dynamic DOM member list container ====*/
 #list_member_container {
@@ -81,6 +88,7 @@ label {
 }
 .member-list {
   background: #2F2F2F;
+  margin-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -100,7 +108,7 @@ label {
 
 /* ==== FOOTER ==== */
 footer {
-  margin-top: 2em;
+  margin-top: 1em;
   text-align: center;
   color: #fff;
   background: #f76c6c;
