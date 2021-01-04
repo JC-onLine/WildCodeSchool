@@ -24,19 +24,12 @@ def main_page(request):
         'members_maxi': app_settings.members_maxi,
         'columns_number': app_settings.columns_number
     }
-    print(f"Get applications settings app_settings: {app_settings.members_maxi} and {app_settings.columns_number}")
-    print(f"Get applications settings app_settings_dict: {app_settings_dict}")
-    print(f"Get applications settings created: {created}")
     # query setup
     team_queryset = \
         Equipage.objects.values_list('name', flat=True).order_by('pk')
     team_list = list(team_queryset)
     # dispach member list in 3 columns
     page_boot_db = dispatch_members_3_columns(team_list)
-    # json compose for JavaScript
-    # page_boot_db = {
-    #     'topic': team_dispatched,
-    # }
     # display form
     context = {
         'DJANGO_URL': settings.DJANGO_URL,
@@ -58,15 +51,14 @@ def add_argonaute(request):
         # read the form data
         form = EquipageForm(request.POST)
         # check valid data and save
-        if form.is_valid():
-            current_data = form.save()
-            # convert data to json for js
-            current_data_json = serializers.serialize('json', [current_data, ])
-            # send data to client.
-            return JsonResponse({"instance": current_data_json}, status=200)
-        else:
+        if not form.is_valid():
             # some form errors occured.
             return JsonResponse({"error": form.errors}, status=400)
+        current_data = form.save()
+        # convert data to json for js
+        current_data_json = serializers.serialize('json', [current_data, ])
+        # send data to client.
+        return JsonResponse({"instance": current_data_json}, status=200)
     # some error occured
     return JsonResponse({"error": ""}, status=400)
 
@@ -80,4 +72,5 @@ def reset_argonautes(request):
     """
     database_all = Equipage.objects.all()
     database_all.delete()
+    # back to main page
     return render(request, 'argonautes/index.html', {})

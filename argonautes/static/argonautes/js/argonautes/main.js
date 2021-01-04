@@ -13,6 +13,11 @@ window.addEventListener("load", function(){
     // Get hostname from DJANGO_URL
     const hostname = DJANGO_URL;
     console.log("DJANGO_URL:" + DJANGO_URL)
+    // Page design
+    // let design_setup = {
+    //     members_maxi: app_settings.members_maxi,
+    //     columns_number: app_settings.columns_number,
+    // }
     // Wamp url https adaptation
     if (hostname === "127.0.0.1") {
         wamp_url = 'ws://' + hostname + ':8080/ws';
@@ -32,23 +37,24 @@ window.addEventListener("load", function(){
         console.log("main.js: app_settings.members_maxi " + app_settings.members_maxi);
         console.log("main.js: app_settings.columns_number " + app_settings.columns_number);
     }
-                    // draw column 1,2 and in DOM
-                    let members_total_count = calcul_total(page_boot_db)
-                    document.getElementById("total-count").textContent = members_total_count;
-                    // disable input form if members > maxi
-                    if (members_total_count >= app_settings.members_maxi) {
-                        document.getElementById("send-button").
-                            setAttribute("disabled", "disabled");
-                        document.getElementById("name").
-                            setAttribute("disabled", "disabled");
-                        document.getElementById("name").placeholder = " C'est complet !";
-                        document.getElementById("name").className = "full";
-                    }
-                    draw_column(1, list_member_container_new, page_boot_db.column1, log);
-                    draw_column(2, list_member_container_new, page_boot_db.column2, log);
-                    draw_column(3, list_member_container_new, page_boot_db.column3, log);
-                    section.appendChild(list_member_container_new);
-                    console.log("main.js: DOM create done.");
+    // draw column 1,2 and in DOM
+    draw_colums("list_member_container", page_boot_db, app_settings, true);
+                    // let members_total_count = calcul_total(page_boot_db)
+                    // document.getElementById("total-count").textContent = members_total_count;
+                    // // disable input form if members > maxi
+                    // if (members_total_count >= app_settings.members_maxi) {
+                    //     document.getElementById("send-button").
+                    //         setAttribute("disabled", "disabled");
+                    //     document.getElementById("name").
+                    //         setAttribute("disabled", "disabled");
+                    //     document.getElementById("name").placeholder = " C'est complet !";
+                    //     document.getElementById("name").className = "full";
+                    // }
+                    // draw_column(1, list_member_container_new, page_boot_db.column1, log);
+                    // draw_column(2, list_member_container_new, page_boot_db.column2, log);
+                    // draw_column(3, list_member_container_new, page_boot_db.column3, log);
+                    // section.appendChild(list_member_container_new);
+                    // console.log("main.js: DOM create done.");
 
     /* ==== Connection configuration to our WAMP router ==== */
     let connection = new autobahn.Connection({
@@ -59,7 +65,6 @@ window.addEventListener("load", function(){
     if (log===true) { console.log("main.js: Autobahn definition with: " + wamp_url) }
 
     // Connection opened
-    // let team_list_json_cp;
     connection.onopen = function(session) {
         console.log("main.js: Autobahn ws connected!");
 
