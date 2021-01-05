@@ -32,7 +32,7 @@ function draw_column(column_id, root_div, column_data, log) {
     root_div.appendChild(column_div);
 }
 
-function draw_colums(target_container, members_data_json, app_settings, log) {
+function draw_colums(app_settings, target_container, members_data_json, log) {
     if (log===true) { console.log("draw_colums.js: "+members_data_json+".column1=" + members_data_json.column1)}
     if (members_data_json !== "") {
         if (log===true) { console.log("draw_colums.js: boot_page_db = null")}
@@ -40,10 +40,15 @@ function draw_colums(target_container, members_data_json, app_settings, log) {
         let node_container = document.getElementById(target_container);
         // remove node_container
         if (node_container) {
-            if (log===true) { console.log("draw_colums.js: start remove " + target_container + "...")}
+            if (log === true) {
+                console.log("draw_colums.js: start remove " + target_container + "...")
+            }
             node_container.remove();
-            if (log===true) { console.log("draw_colums.js: '" +target_container +"' removed.")}
-        }else{
+            if (log === true) {
+                console.log("draw_colums.js: '" + target_container + "' removed.")
+            }
+        }
+        // }else{
             console.log("draw_colums.js: '"+ target_container +"' not found: Create it!");
             if (log===true) { console.log("draw_colums.js: starting create '" +target_container +"'...")}
             let section = document.getElementById("team-list-section");
@@ -69,7 +74,7 @@ function draw_colums(target_container, members_data_json, app_settings, log) {
             section.appendChild(target_container_new);
             console.log("draw_colums.js: DOM create done.");
 
-        }
+        // }
     }
 }
 
