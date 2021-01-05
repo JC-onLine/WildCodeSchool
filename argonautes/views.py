@@ -15,14 +15,15 @@ def main_page(request):
     :return:        Display form on page boot
                     Save team memeber name in database
     """
-    # Get applications settings
+    # Get/Set applications settings
     # - app_settings: get members_maxi & columns_number
     # - created: True if created else False
     app_settings, created = AppliSettings.objects.\
         get_or_create(members_maxi=40, columns_number=3)
     app_settings_dict = {
         'members_maxi': app_settings.members_maxi,
-        'columns_number': app_settings.columns_number
+        'columns_number': app_settings.columns_number,
+        'log': False,
     }
     # query setup
     team_queryset = \

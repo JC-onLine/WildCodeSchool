@@ -32,6 +32,19 @@ function draw_column(column_id, root_div, column_data, log) {
     root_div.appendChild(column_div);
 }
 
+function refresh_total_count(members_data){
+    let members_total_count = calcul_total(members_data)
+    document.getElementById("total-count").textContent = members_total_count;
+    if (members_total_count >= app_settings.members_maxi) {
+        document.getElementById("send-button").
+            setAttribute("disabled", "disabled");
+        document.getElementById("name").
+            setAttribute("disabled", "disabled");
+        document.getElementById("name").placeholder = " C'est complet !";
+        document.getElementById("name").className = "full";
+    }
+}
+
 function draw_colums(app_settings, target_container, members_data_json, log) {
     if (log===true) { console.log("draw_colums.js: "+members_data_json+".column1=" + members_data_json.column1)}
     if (members_data_json !== "") {
@@ -48,33 +61,20 @@ function draw_colums(app_settings, target_container, members_data_json, log) {
                 console.log("draw_colums.js: '" + target_container + "' removed.")
             }
         }
-        // }else{
-            console.log("draw_colums.js: '"+ target_container +"' not found: Create it!");
-            if (log===true) { console.log("draw_colums.js: starting create '" +target_container +"'...")}
-            let section = document.getElementById("team-list-section");
-            let target_container_new = document.createElement("div");
-            target_container_new.id = target_container;
-            target_container_new.setAttribute("class", target_container);
-            if (log===true) { console.log("draw_colums.js: 'target_container_new' " + target_container_new)}
-            // draw column 1,2 and in DOM
-            let members_total_count = calcul_total(members_data_json)
-            document.getElementById("total-count").textContent = members_total_count;
-            // disable input form if > members_maxi
-            if (members_total_count >= app_settings.members_maxi) {
-                document.getElementById("send-button").
-                    setAttribute("disabled", "disabled");
-                document.getElementById("name").
-                    setAttribute("disabled", "disabled");
-                document.getElementById("name").placeholder = " C'est complet !";
-                document.getElementById("name").className = "full";
-            }
-            draw_column(1, target_container_new, members_data_json.column1, log);
-            draw_column(2, target_container_new, members_data_json.column2, log);
-            draw_column(3, target_container_new, members_data_json.column3, log);
-            section.appendChild(target_container_new);
-            console.log("draw_colums.js: DOM create done.");
-
-        // }
+        if (log === true) { console.log("draw_colums.js: '"+ target_container +"' not found: Create it!");}
+        if (log === true) { console.log("draw_colums.js: starting create '" +target_container +"'...")}
+        let section = document.getElementById("team-list-section");
+        let target_container_new = document.createElement("div");
+        target_container_new.id = target_container;
+        target_container_new.setAttribute("class", target_container);
+        if (log===true) { console.log("draw_colums.js: 'target_container_new' " + target_container_new)}
+        // draw column 1,2 and in DOM
+        
+        draw_column(1, target_container_new, members_data_json.column1, log);
+        draw_column(2, target_container_new, members_data_json.column2, log);
+        draw_column(3, target_container_new, members_data_json.column3, log);
+        section.appendChild(target_container_new);
+        if (log === true) { console.log("draw_colums.js: DOM create done."); }
     }
 }
 
