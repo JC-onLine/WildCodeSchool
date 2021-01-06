@@ -24,7 +24,7 @@ window.addEventListener("load", function(){
     /* ==== Display members colums on boot page ==== */
     if (log===true) { console.log("main.js: starting create 'list_member_container'...")}
     // refresh total count
-    refresh_total_count(page_boot_db)
+    update_total_count(page_boot_db, app_settings.members_maxi);
     // draw column 1,2 and in DOM
     draw_colums(app_settings, "list_member_container", page_boot_db, log);
 
@@ -47,7 +47,7 @@ window.addEventListener("load", function(){
             let team_dispatched = args[0];
             if (team_dispatched !== "") {
             // refresh total count
-            refresh_total_count(page_boot_db)
+            update_total_count(team_dispatched, app_settings.members_maxi);
             // draw column 1,2 and in DOM
             draw_colums(app_settings, "list_member_container", team_dispatched, true);
             }
