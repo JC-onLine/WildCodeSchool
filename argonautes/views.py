@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .form import EquipageForm
 from .models import Equipage, AppliSettings
-from .tools import dispatch_members_3_columns
+from .tools import columns_spliter
 from django.conf import settings
 # Used for ajasx POST
 from django.http import JsonResponse
@@ -19,18 +19,18 @@ def main_page(request):
     # - app_settings: get members_maxi & columns_number
     # - created: True if created else False
     app_settings, created = AppliSettings.objects.\
-        get_or_create(members_maxi=40, columns_number=3)
+        get_or_create(members_maxi=40, columns_number=5)
     app_settings_dict = {
         'members_maxi': app_settings.members_maxi,
         'columns_number': app_settings.columns_number,
         'log': False,
     }
     # query setup
-    team_queryset = \
+    members_queryset = \
         Equipage.objects.values_list('name', flat=True).order_by('pk')
-    team_list = list(team_queryset)
-    # dispach member list in 3 columns
-    page_boot_db = dispatch_members_3_columns(team_list)
+    members_list = list(members_queryset)
+    # dispach member list in X columns
+    page_boot_db = columns_spliter(members_list, app_settings.columns_number)
     # display form
     context = {
         'DJANGO_URL': settings.DJANGO_URL,

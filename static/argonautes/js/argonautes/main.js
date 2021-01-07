@@ -22,32 +22,27 @@ window.addEventListener("load", function(){
 
     /* ==== Display members colums on boot page ==== */
     if (log===true) { console.log("main.js: starting create 'list_member_container'...")}
-    // refresh total count
     update_total_count(page_boot_db, app_settings.members_maxi);
-    // draw column 1,2 and in DOM
     draw_colums(app_settings, "list_member_container", page_boot_db, log);
 
     /* ==== Connection configuration to our WAMP router ==== */
     let connection = new autobahn.Connection({
-        // default url= url: 'ws://127.0.0.1:8080/ws',
-        url: wamp_url,
+        url: wamp_url,  // default url= url: 'ws://127.0.0.1:8080/ws'
         realm: 'realm1'
     });
-    if (log===true) { console.log("main.js: Autobahn definition with: " + wamp_url) }
+    if (log === true) { console.log("main.js: Autobahn definition with: " + wamp_url) }
 
     /* ==== Connection opened ==== */
     connection.onopen = function(session) {
         console.log("main.js: Websocket connected!");
         // ==== RUNTIME CHANNEL ====
-        //When we receive the 'client_topic' event, REMOVE/DRAW the page columns.
+        //When we receive the 'argonautes_channel' event, REMOVE/DRAW the page columns.
         session.subscribe('argonautes_channel', function(args){
             // get team_list_json from python autobahn websocket
-            let team_dispatched = args[0];
-            if (team_dispatched !== "") {
-                // refresh total count
-                update_total_count(team_dispatched, app_settings.members_maxi);
-                // draw column 1,2 and in DOM
-                draw_colums(app_settings, "list_member_container", team_dispatched, log);
+            let members_data = args[0];
+            if (members_data !== "") {
+                update_total_count(members_data, app_settings.members_maxi);
+                draw_colums(app_settings, "list_member_container", members_data, log);
                 console.log("main.js: Page updated!");
             }
         }); //subscribe
