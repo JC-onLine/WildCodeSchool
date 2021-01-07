@@ -13,7 +13,6 @@ window.addEventListener("load", function(){
     let node_container;
     // Get hostname from DJANGO_URL
     const hostname = DJANGO_URL;
-    console.log("DJANGO_URL:" + DJANGO_URL)
     // Wamp url https adaptation
     if (hostname === "127.0.0.1") {
         wamp_url = 'ws://' + hostname + ':8080/ws';
@@ -38,18 +37,18 @@ window.addEventListener("load", function(){
 
     /* ==== Connection opened ==== */
     connection.onopen = function(session) {
-        console.log("main.js: Autobahn ws connected!");
+        console.log("main.js: Websocket connected!");
         // ==== RUNTIME CHANNEL ====
-        //When we receive the 'client_topic' event, CLEAR/DISPLAY the page columns.
+        //When we receive the 'client_topic' event, REMOVE/DRAW the page columns.
         session.subscribe('argonautes_channel', function(args){
-            console.log("main.js: --> client subscribed on argonautes_channel!");
             // get team_list_json from python autobahn websocket
-            let team_dispatched = args[0];
-            if (team_dispatched !== "") {
-            // refresh total count
-            update_total_count(team_dispatched, app_settings.members_maxi);
-            // draw column 1,2 and in DOM
-            draw_colums(app_settings, "list_member_container", team_dispatched, true);
+            let members_data = args[0];
+            if (members_data !== "") {
+                // refresh total count
+                update_total_count(members_data, app_settings.members_maxi);
+                // draw column 1,2 and in DOM
+                draw_colums(app_settings, "list_member_container", members_data, log);
+                console.log("main.js: Page updated!");
             }
         }); //subscribe
     } //onopen
