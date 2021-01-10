@@ -18,11 +18,13 @@ def main_page(request):
     # Get/Set applications settings
     # - app_settings: get members_maxi & columns_number
     # - created: True if created else False
-    app_settings, created = AppliSettings.objects.\
-        get_or_create(members_maxi=40, columns_number=5)
+    # app_settings, created = AppliSettings.objects.\
+    #     get_or_create(members_maxi=40, columns_number=3)
     app_settings_dict = {
-        'members_maxi': app_settings.members_maxi,
-        'columns_number': app_settings.columns_number,
+        # 'members_maxi': app_settings.members_maxi,
+        # 'columns_number': app_settings.columns_number,
+        'members_maxi': 40,
+        'columns_number': 5,
         'log': False,
     }
     # query setup
@@ -30,7 +32,8 @@ def main_page(request):
         Equipage.objects.values_list('name', flat=True).order_by('pk')
     members_list = list(members_queryset)
     # dispach member list in X columns
-    page_boot_db = columns_spliter(members_list, app_settings.columns_number)
+    # page_boot_db = columns_spliter(members_list, app_settings.columns_number)
+    page_boot_db = columns_spliter(members_list, 5)
     # display form
     context = {
         'DJANGO_URL': settings.DJANGO_URL,
