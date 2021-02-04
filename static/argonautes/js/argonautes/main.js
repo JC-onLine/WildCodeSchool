@@ -10,7 +10,6 @@ window.addEventListener("load", function(){
     */
     const log = app_settings.log;
     let wamp_url
-    let node_container;
     // Get hostname from DJANGO_URL
     const hostname = DJANGO_URL;
     // Wamp url https adaptation

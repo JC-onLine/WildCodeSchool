@@ -15,8 +15,9 @@ class Equipage(models.Model):
 
 class AppliSettings(models.Model):
 
-    members_maxi = models.IntegerField(unique=True)
-    columns_number = models.IntegerField(unique=True)
+    profile = models.IntegerField(default=1, unique=True)
+    members_maxi = models.IntegerField(default=50, unique=True)
+    columns_number = models.IntegerField(default=3, unique=True)
 
 
 # @receiver(post_save, sender=Equipage, dispatch_uid="server_post_save")
@@ -27,27 +28,23 @@ def notify_client_database_changed(sender, instance, **kwargs):
         allowing us to make a WAMP publication from Django.
     """
     # Get/Set applications settings
-    # - app_settings: get members_maxi & columns_number
-    # - created: True if created else False
-    # app_settings, created = AppliSettings.objects.\
-    #     get_or_create(members_maxi=40, columns_number=3)
+    # app_settings: get members_maxi & columns_number
+    current_app_settings = AppliSettings.objects.filter(profile=1).get()
     app_settings_dict = {
-        # 'members_maxi': app_settings.members_maxi,
-        # 'columns_number': app_settings.columns_number,
-        'members_maxi': 40,
-        'columns_number': 5,
+        'members_maxi': current_app_settings.members_maxi,
+        'columns_number': current_app_settings.columns_number,
         'log': False,
     }
-
-    log = False
-
-    if log: print("==== Database Event! + ws_sender_run() ====")
+    log = True
+    if log:
+        print("==== Database Event! + ws_sender_run() ====")
     members_queryset = \
         Equipage.objects.values_list('name', flat=True).order_by('pk')
     members_list = list(members_queryset)
     team_dispatched = \
         columns_spliter(members_list, app_settings_dict['columns_number'])
-    if log: print(f"== Database: {team_dispatched}")
+    if log:
+        print(f"== Database: {team_dispatched}")
     ws_sender_run(
         host=settings.DJANGO_URL,
         message=team_dispatched,
