@@ -14,7 +14,7 @@ $("#member-form").submit(function (event) {
         type: 'POST',
         url: "/wcs/add",
         data: serializedData,
-        success: function (response) {
+        success: function () {
             if (log===true) { console.log('js-form.js: member-form SUCCESS')}
             // on successfull creating object
             // 1. clear the form.
@@ -22,7 +22,7 @@ $("#member-form").submit(function (event) {
             // 2. focus to nickname input
             $("#id_name").focus();
         },
-        error: function (response) {
+        error: function () {
             if (log===true) { console.log('js-form.js: member-form ERROR')}
             // alert the error if any error occured
             alert("Contrôler le formulaire, merci.");

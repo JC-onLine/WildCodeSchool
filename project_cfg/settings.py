@@ -164,4 +164,3 @@ STATIC_URL = '/static/'
 print(f"==== settings.py: DJANGO_URL={DJANGO_URL}")
 print(f"==== settings.py: ALLOWED_HOSTS={ALLOWED_HOSTS}")
 print(f"==== settings.py: DEBUG={DEBUG}")
-print(f"==== settings.py: SECRET_KEY={SECRET_KEY}")
