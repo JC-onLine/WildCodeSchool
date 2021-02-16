@@ -59,7 +59,16 @@ WildCodeSchool
     ├── django-env.json
     └── db.sqlite3
 ```
-- The `secure-zone` folder is used to separate `settings` and `database` from `github` and `deployment server`. 
+- The `secure-zone` folder is used to separate `settings` and `database` from `github` and `deployment server`.
+  
+  `django-env.json` config example in `secure-zone`:
+  ```
+  {
+    "DJANGO_URL": "open1024.fr",
+    "DJANGO_DEBUG": "False",
+    "DJANGO_KEY": "******DJANGO-SECRET-KEY******"
+  }
+  ```
 - In a terminal, go to `django` folder and run the application:
   
   `crossbar start` 
@@ -74,7 +83,7 @@ WildCodeSchool
 - These values can be changed in the `Django admin` page. 
 ### Screen adaptation
 - The `CSS` uses `CSS Gird`.
-- Columns are resiponsive with a simple `minmax(250px, 1fr)`.
+- Columns are responsive with a simple `minmax(250px, 1fr)`.
 - There is only one column on smartphone display.
 ## Show me some screenshots !
 ### Desktop
